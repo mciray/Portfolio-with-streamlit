@@ -81,20 +81,24 @@ def main():
         annotated_text(
                 *data[:len(data)//1:]
         )
-        javascript_code = st_monaco(value="##javascript", height="300px",  language="javascript")
+        javascript_code = st_monaco(value="//JavaScript", height="300px",  language="javascript")
 
         if st.button("Run"):
             try:
-               
+                # JavaScript kodunu temp.js dosyasına yaz
                 with open("temp.js", "w") as temp_file:
                     temp_file.write(javascript_code)
 
-                result = subprocess.check_output(["node", "temp.js"], text=True)
+                # node.exe yolu. Projenizin yapısına göre bu yolu güncelleyin.
+                node_exe_path = "./node.exe"
 
-               
+                # subprocess.check_output ile JavaScript dosyasını çalıştır
+                result = subprocess.check_output([node_exe_path, "temp.js"], text=True)
+
+                # Çıktıyı göster
                 st.text("Output:")
                 st.code(result, language="javascript")
-                
+                        
             except Exception as e:
                 st.error(f"Error: {str(e)}")
             
