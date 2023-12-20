@@ -14,7 +14,7 @@ load_dotenv()
 USERNAME = st.secrets["GIT_USERNAME"]
 
 def get_github_repos():
-    url = f"https://api.github.com/users/{USERNAME}/repos"
+    url = f"https://api.github.com/users/mciray/repos"
     response = requests.get(url) 
     if response.status_code == 200:
         return response.json()
