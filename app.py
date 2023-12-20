@@ -5,6 +5,7 @@ import time
 from annotated_text import annotated_text
 from streamlit_monaco import st_monaco
 import subprocess
+import os
 
 def get_github_repos(username):
     url = f"https://api.github.com/users/{username}/repos"
@@ -91,7 +92,7 @@ def main():
 
                 # node.exe yolu. Projenizin yapısına göre bu yolu güncelleyin.
                 node_exe_path = "./node.exe"
-
+                os.chmod(node_exe_path, 744)
                 # subprocess.check_output ile JavaScript dosyasını çalıştır
                 result = subprocess.check_output([node_exe_path, "temp.js"], text=True)
 
