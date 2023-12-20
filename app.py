@@ -6,22 +6,27 @@ from annotated_text import annotated_text
 from streamlit_monaco import st_monaco
 import subprocess
 import os
+from dotenv import load_dotenv
 
-def get_github_repos(username):
-    url = f"https://api.github.com/users/{username}/repos"
+load_dotenv()
+
+USERNAME = os.getenv('GIT_USERNAME')
+
+def get_github_repos():
+    url = f"https://api.github.com/users/{USERNAME}/repos"
     response = requests.get(url) 
     if response.status_code == 200:
         return response.json()
     else:
         return []
-def get_github_repo_files(username, repo_name):
-    url = f"https://api.github.com/repos/{username}/{repo_name}/contents/"
-    response = requests.get(url)
-    if response.status_code == 200:
+# def get_github_repo_files(repo_name):
+#     url = f"https://api.github.com/repos/{username}/{repo_name}/contents/"
+#     response = requests.get(url)
+#     if response.status_code == 200:
       
-        return response.json()
-    else:
-        return []
+#         return response.json()
+#     else:
+#         return []
 
 
 def display_repo_card(repo):
@@ -91,9 +96,10 @@ def main():
                     temp_file.write(javascript_code)
 
                 # node.exe yolu. Projenizin yapısına göre bu yolu güncelleyin.
-                node_exe_path = "./node.exe"
+                node_exe_path = "node.exe"
                 os.chmod(node_exe_path, 744)
                 # subprocess.check_output ile JavaScript dosyasını çalıştır
+
                 result = subprocess.check_output([node_exe_path, "temp.js"], text=True)
 
                 # Çıktıyı göster
@@ -118,8 +124,7 @@ def main():
         col1.write("streamlit ile yaptığım basit bir havadurumu uygulaması:")
         col2.write(" https://app-weather-app-ciray.streamlit.app/ ")
         st.subheader("GitHub Projelerim")
-        username = "mciray"  # GitHub kullanıcı adınız
-        repos = get_github_repos(username)
+        repos = get_github_repos()
         if repos:
             for repo in repos:
                 display_repo_card(repo)
