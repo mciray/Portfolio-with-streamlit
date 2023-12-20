@@ -10,7 +10,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-USERNAME = os.getenv('GIT_USERNAME')
+# USERNAME = os.getenv('GIT_USERNAME')
+USERNAME = st.secrets["GIT_USERNAME"]
 
 def get_github_repos():
     url = f"https://api.github.com/users/{USERNAME}/repos"
