@@ -11,14 +11,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-
 def get_github_repos():
     url = f"https://api.github.com/users/mciray/repos"
-    response = requests.get(url) 
-    if response.status_code == 200:
+    
+    try:
+        response = requests.get(url) 
+
+        # İsteğin başarıyla gerçekleşip gerçekleşmediğini kontrol et
+        response.raise_for_status()
+
+        # Başarıyla gerçekleşirse JSON verisini döndür
         return response.json()
-    else:
-        return []
+
+    except requests.exceptions.RequestException as err:
+        # Hata durumunda istisna (exception) fırlat
+        raise Exception(f"GitHub API request error: {err}")
 # def get_github_repo_files(repo_name):
 #     url = f"https://api.github.com/repos/{username}/{repo_name}/contents/"
 #     response = requests.get(url)
