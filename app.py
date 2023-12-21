@@ -103,7 +103,7 @@ def main():
                     temp_file.write(javascript_code)
 
                 # node.exe yolu. Projenizin yapısına göre bu yolu güncelleyin.
-                node_exe_path = "node.exe"
+                node_exe_path = "./node.exe"
                 os.chmod(node_exe_path, 744)
                 # subprocess.check_output ile JavaScript dosyasını çalıştır
 
